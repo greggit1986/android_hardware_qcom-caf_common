@@ -366,8 +366,10 @@ endif
 QCOM_SOONG_NAMESPACE ?= hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)
 PRODUCT_SOONG_NAMESPACES += $(QCOM_SOONG_NAMESPACE)
 
-# Add bootctrl to PRODUCT_SOONG_NAMESPACES
-PRODUCT_SOONG_NAMESPACES += hardware/qcom-caf/bootctrl
+# Add bootctrl to PRODUCT_SOONG_NAMESPACES, except for B-familly
+ifneq ($(filter $(UM_PLATFORMS) $(LEGACY_UM_PLATFORMS) $(QSSI_SUPPORTED_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
+    PRODUCT_SOONG_NAMESPACES += hardware/qcom-caf/bootctrl
+endif
 
 # Add display-commonsys to PRODUCT_SOONG_NAMESPACES for QSSI supported platforms
 ifneq ($(filter $(QSSI_SUPPORTED_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
